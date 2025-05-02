@@ -37,58 +37,75 @@ function HomePage() {
       <ConsultationForm isOpen={isConsultationOpen} onClose={() => setIsConsultationOpen(false)} />
 
       {/* Hero Section */}
-      <div className="relative isolate overflow-hidden pt-14">
+      <div className="relative isolate overflow-hidden pt-14 border-b border-orange-900/10">
         <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-transparent"></div>
+          <div className="h-full w-full bg-gradient-to-br from-indigo-500/5 via-transparent to-purple-500/5"></div>
         </div>
-        <img
-          alt="Tech team collaborating"
-          src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
-          className="absolute inset-0 -z-10 size-full object-cover"
-        />
-        <div
-          aria-hidden="true"
+        
+        {/* Decorative elements - top */}
+        <div 
+          aria-hidden="true" 
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
         >
           <div
             style={{
-              clipPath:
-                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+              clipPath: "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
             }}
-            className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+            className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-[#ffac42] to-[#ff5757] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
           />
         </div>
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-            <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-              <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-400 ring-1 ring-white/10 hover:ring-white/20">
-                {t.hero.announcement}{" "}
-                <a href="/services/ai" className="font-semibold text-white">
-                  <span aria-hidden="true" className="absolute inset-0" />
-                  {t.hero.learnMore} <span aria-hidden="true">&rarr;</span>
-                </a>
+
+        <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
+          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center">
+            {/* Image Column (Left) */}
+            <div className="relative lg:order-first">
+              <div className="relative overflow-hidden rounded-xl bg-gray-800/50 shadow-xl ring-1 ring-white/10 lg:rounded-2xl">
+                <Image
+                  src="/images/thai_women.png"
+                  alt="Thai women representative"
+                  width={800}
+                  height={600}
+                  className="w-full object-cover"
+                  style={{ height: "auto", maxHeight: "600px" }}
+                />
+                <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
               </div>
+              <div className="absolute -bottom-6 -left-6 h-24 w-24 rounded-lg bg-orange-600/10 blur-2xl"></div>
+              <div className="absolute -top-6 -right-6 h-24 w-24 rounded-lg bg-yellow-600/10 blur-2xl"></div>
             </div>
-            <div className="text-center">
-              <h1 className="text-5xl font-semibold tracking-tight text-balance text-white sm:text-7xl">
+            
+            {/* Content Column (Right) */}
+            <div className="lg:pr-8 lg:pt-4">
+              <div className="hidden sm:mb-8 sm:flex">
+                <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-400 ring-1 ring-white/10 hover:ring-white/20">
+                  {t.hero.announcement}{" "}
+                  <Link href="/services/ai" className="font-semibold text-white">
+                    <span aria-hidden="true" className="absolute inset-0" />
+                    {t.hero.learnMore} <span aria-hidden="true">&rarr;</span>
+                  </Link>
+                </div>
+              </div>
+              
+              <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
                 {t.hero.mainHeading}
               </h1>
-              <p className="mt-8 text-lg font-medium text-pretty text-gray-400 sm:text-xl/8">
+              <p className="mt-6 text-lg text-gray-300 leading-8">
                 {t.hero.subHeading}
               </p>
-              <div className="mt-10 flex items-center justify-center gap-x-6">
-                <a
+              
+              <div className="mt-10 flex flex-wrap gap-x-6 gap-y-4">
+                <Link
                   href="/services/development-services"
-                  className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+                  className="rounded-md bg-orange-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
                 >
                   {t.hero.exploreServices}
-                </a>
-                <a href="/about" className="text-sm/6 font-semibold text-white">
-                  {t.hero.aboutUs} <span aria-hidden="true">→</span>
-                </a>
+                </Link>
+                <Link href="/about" className="text-sm/6 font-semibold text-white flex items-center">
+                  {t.hero.aboutUs} <span aria-hidden="true" className="ml-1">→</span>
+                </Link>
                 <button
                   onClick={() => setIsConsultationOpen(true)}
-                  className="rounded-md bg-gradient-to-r from-orange-600 to-orange-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-lg hover:from-orange-500 hover:to-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900 animate-pulse"
+                  className="rounded-md bg-gradient-to-r from-amber-600 to-orange-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-lg hover:from-amber-500 hover:to-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900"
                 >
                   {t.hero.freeConsultation}
                 </button>
@@ -96,16 +113,17 @@ function HomePage() {
             </div>
           </div>
         </div>
+        
+        {/* Decorative elements - bottom */}
         <div
           aria-hidden="true"
           className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
         >
           <div
             style={{
-              clipPath:
-                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+              clipPath: "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
             }}
-            className="relative left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+            className="relative left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-linear-to-tr from-[#ffac42] to-[#ff5757] opacity-20 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
           />
         </div>
       </div>
@@ -502,9 +520,11 @@ function HomePage() {
           <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <div className="group relative overflow-hidden rounded-xl bg-gray-800/50 shadow-lg transition-all hover:bg-gray-800/70">
               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
-              <img 
+              <Image 
                 src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" 
                 alt="AI-powered development"
+                width={800}
+                height={600}
                 className="h-64 w-full object-cover transition-transform group-hover:scale-105"
               />
               <div className="absolute inset-x-0 bottom-0 p-6">
@@ -520,9 +540,11 @@ function HomePage() {
             
             <div className="group relative overflow-hidden rounded-xl bg-gray-800/50 shadow-lg transition-all hover:bg-gray-800/70">
               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
-              <img 
+              <Image 
                 src="https://images.unsplash.com/photo-1545987796-200677ee1011?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
                 alt="Immersive Web Experiences" 
+                width={800}
+                height={600}
                 className="h-64 w-full object-cover transition-transform group-hover:scale-105"
               />
               <div className="absolute inset-x-0 bottom-0 p-6">
@@ -538,14 +560,16 @@ function HomePage() {
             
             <div className="group relative overflow-hidden rounded-xl bg-gray-800/50 shadow-lg transition-all hover:bg-gray-800/70">
               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
-              <img 
+              <Image 
                 src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" 
                 alt="Edge Computing"
+                width={800}
+                height={600}
                 className="h-64 w-full object-cover transition-transform group-hover:scale-105"
               />
               <div className="absolute inset-x-0 bottom-0 p-6">
                 <h3 className="text-xl font-bold text-white">Edge Computing</h3>
-                <p className="mt-2 text-sm text-gray-300">Process data closer to where it's collected for faster, more reliable apps</p>
+                <p className="mt-2 text-sm text-gray-300">Process data closer to where it&apos;s collected for faster, more reliable apps</p>
               </div>
               <div className="absolute top-0 right-0 p-4">
                 <span className="rounded-full bg-indigo-600/80 px-2.5 py-0.5 text-xs font-semibold text-white">
@@ -556,9 +580,11 @@ function HomePage() {
             
             <div className="group relative overflow-hidden rounded-xl bg-gray-800/50 shadow-lg transition-all hover:bg-gray-800/70">
               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
-              <img 
+              <Image 
                 src="https://images.unsplash.com/photo-1639762681057-408e52192e55?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
                 alt="Web3 Integration" 
+                width={800}
+                height={600}
                 className="h-64 w-full object-cover transition-transform group-hover:scale-105"
               />
               <div className="absolute inset-x-0 bottom-0 p-6">
@@ -578,9 +604,9 @@ function HomePage() {
               <div className="rounded-[calc(0.75rem-1px)] bg-gray-900 px-6 py-4">
                 <p className="text-center text-sm md:text-base text-gray-300">
                   Stay updated with the latest digital trends through our expert-led 
-                  <a href="/blog" className="ml-1 font-medium text-indigo-400 hover:text-indigo-300 hover:underline transition-colors">
+                  <Link href="/blog" className="ml-1 font-medium text-indigo-400 hover:text-indigo-300 hover:underline transition-colors">
                     blog posts and industry insights
-                  </a>
+                  </Link>
                 </p>
               </div>
             </div>
@@ -592,9 +618,11 @@ function HomePage() {
       <section className="relative isolate overflow-hidden">
         <div className="relative bg-gray-900">
           <div className="relative h-80 overflow-hidden bg-indigo-600 md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2">
-            <img
+            <Image
               alt="Team collaboration"
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=60&blend=6366F1&sat=-100&blend-mode=multiply"
+              width={1920}
+              height={1080}
               className="size-full object-cover"
             />
             <svg
