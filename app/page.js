@@ -7,79 +7,34 @@ import Footer from "@/components/Footer";
 import Image from "next/image";
 import { ChatBot } from "@/components/ChatBot";
 import Link from "next/link";
+import ConsultationForm from "@/components/ConsultationForm";
+import { LanguageProvider, useLanguage } from "@/lib/LanguageContext";
 
 import {
   CloudArrowUpIcon,
   LockClosedIcon,
   ServerIcon,
+  ChartBarIcon,
+  PuzzlePieceIcon,
+  ArrowTrendingUpIcon,
+  HeartIcon,
+  TrophyIcon,
+  UserGroupIcon,
+  CheckCircleIcon,
 } from "@heroicons/react/20/solid";
 
-const services = [
-  {
-    title: "Web Development",
-    description:
-      "Modern web solutions using React, Next.js, and Node.js. From landing pages to complex web applications with responsive design.",
-    icon: "🌐",
-    href: "/services/development-services",
-    image:
-      "https://images.unsplash.com/photo-1587620962725-abab7fe55159?ixlib=rb-4.0.3&auto=format&fit=crop&w=2831&q=80",
-  },
-  {
-    title: "Mobile Development",
-    description:
-      "Cross-platform mobile apps for iOS and Android built with React Native and Flutter. Native-like performance with shared codebase.",
-    icon: "📱",
-    href: "/services/development-services",
-    image:
-      "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2831&q=80",
-  },
-  {
-    title: "UI/UX Design",
-    description:
-      "User-centered design solutions that create intuitive interfaces with engaging visuals and seamless user experiences.",
-    icon: "🎨",
-    href: "/services/design-services",
-    image:
-      "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?ixlib=rb-4.0.3&auto=format&fit=crop&w=2831&q=80",
-  },
-  {
-    title: "Digital Marketing",
-    description:
-      "Strategic SEO, content marketing, and social media campaigns that drive targeted traffic and increase conversions.",
-    icon: "📈",
-    href: "/services/digital-marketing",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab7fe551c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2831&q=80",
-  },
-];
+function HomePage() {
+  const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+  const { t } = useLanguage();
 
-const features = [
-  {
-    name: "Cutting-Edge Technology",
-    description:
-      "We leverage the latest tech stacks including React, Next.js, and cloud-native solutions to build scalable and future-proof digital products.",
-    icon: CloudArrowUpIcon,
-  },
-  {
-    name: "Security by Design",
-    description:
-      "Built-in security practices with modern authentication methods, data encryption, and compliance-ready infrastructure.",
-    icon: LockClosedIcon,
-  },
-  {
-    name: "Reliable Performance",
-    description:
-      "Optimized for speed and reliability with edge computing, CDN integration, and performance monitoring.",
-    icon: ServerIcon,
-  },
-];
-
-export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br" style={{ background: 'linear-gradient(to bottom right, rgb(19,24,38), black, rgb(19,24,38))' }}>
       <div className="absolute inset-0" style={{ background: 'radial-gradient(circle at top, rgba(19,24,38,0.8), black, rgb(19,24,38))' }}></div>
       <Header />
       <ChatBot />
+
+      {/* Free Consultation Modal */}
+      <ConsultationForm isOpen={isConsultationOpen} onClose={() => setIsConsultationOpen(false)} />
 
       {/* Hero Section */}
       <div className="relative isolate overflow-hidden pt-14">
@@ -107,30 +62,36 @@ export default function Home() {
           <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
             <div className="hidden sm:mb-8 sm:flex sm:justify-center">
               <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-400 ring-1 ring-white/10 hover:ring-white/20">
-                Just launched: Our AI-powered development services.{" "}
+                {t.hero.announcement}{" "}
                 <a href="/services/ai" className="font-semibold text-white">
                   <span aria-hidden="true" className="absolute inset-0" />
-                  Learn more <span aria-hidden="true">&rarr;</span>
+                  {t.hero.learnMore} <span aria-hidden="true">&rarr;</span>
                 </a>
               </div>
             </div>
             <div className="text-center">
               <h1 className="text-5xl font-semibold tracking-tight text-balance text-white sm:text-7xl">
-                Transforming Ideas into Digital Reality
+                {t.hero.mainHeading}
               </h1>
               <p className="mt-8 text-lg font-medium text-pretty text-gray-400 sm:text-xl/8">
-                We build innovative web and mobile applications, create stunning designs, and implement effective digital marketing strategies to help startups and businesses thrive in the digital world.
+                {t.hero.subHeading}
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <a
                   href="/services/development-services"
                   className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
                 >
-                  Explore Services
+                  {t.hero.exploreServices}
                 </a>
                 <a href="/about" className="text-sm/6 font-semibold text-white">
-                  About Us <span aria-hidden="true">→</span>
+                  {t.hero.aboutUs} <span aria-hidden="true">→</span>
                 </a>
+                <button
+                  onClick={() => setIsConsultationOpen(true)}
+                  className="rounded-md bg-gradient-to-r from-orange-600 to-orange-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-lg hover:from-orange-500 hover:to-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900 animate-pulse"
+                >
+                  {t.hero.freeConsultation}
+                </button>
               </div>
             </div>
           </div>
@@ -157,10 +118,10 @@ export default function Home() {
         <div className="relative w-full py-24 sm:py-32">
           <div className="mx-auto max-w-[95%] px-4">
             <h2 className="text-center text-base/7 font-semibold text-orange-400">
-              Our Services
+              {t.services.title}
             </h2>
             <p className="mx-auto mt-2 max-w-lg text-center text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
-              End-to-End Digital Solutions
+              {t.services.subtitle}
             </p>
             <div className="mt-10 grid gap-3 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
               {/* Web Development - Large Card */}
@@ -169,10 +130,10 @@ export default function Home() {
                 <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
                   <div className="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
                     <p className="mt-2 text-lg font-medium tracking-tight text-white max-lg:text-center">
-                      Web Development
+                      {t.services.webDev}
                     </p>
                     <p className="mt-2 max-w-lg text-sm/6 text-gray-300 max-lg:text-center">
-                      Modern, responsive websites and web applications built with React, Next.js, and Node.js.
+                      {t.services.webDevDesc}
                     </p>
                   </div>
                   <div className="@container relative min-h-[30rem] w-full grow max-lg:mx-auto max-lg:max-w-sm">
@@ -193,10 +154,10 @@ export default function Home() {
                 <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
                   <div className="px-8 pt-8 sm:px-10 sm:pt-10">
                     <p className="mt-2 text-lg font-medium tracking-tight text-white max-lg:text-center">
-                      Mobile Development
+                      {t.services.mobileDev}
                     </p>
                     <p className="mt-2 max-w-lg text-sm/6 text-gray-300 max-lg:text-center">
-                      Cross-platform mobile apps with React Native and Flutter for iOS and Android.
+                      {t.services.mobileDevDesc}
                     </p>
                   </div>
                   <div className="flex flex-1 items-center justify-center px-6 max-lg:pt-10 max-lg:pb-12 sm:px-8 lg:pb-2">
@@ -215,10 +176,10 @@ export default function Home() {
                 <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
                   <div className="px-8 pt-8 sm:px-10 sm:pt-10">
                     <p className="mt-2 text-lg font-medium tracking-tight text-white max-lg:text-center">
-                      UI/UX Design
+                      {t.services.uiUxDesign}
                     </p>
                     <p className="mt-2 max-w-lg text-sm/6 text-gray-300 max-lg:text-center">
-                      User-centered design with intuitive interfaces and engaging experiences.
+                      {t.services.uiUxDesignDesc}
                     </p>
                   </div>
                   <div className="@container flex flex-1 items-center justify-center max-lg:py-6 lg:pb-2">
@@ -237,10 +198,10 @@ export default function Home() {
                 <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">
                   <div className="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
                     <p className="mt-2 text-lg font-medium tracking-tight text-white max-lg:text-center">
-                      Digital Marketing
+                      {t.services.digitalMarketing}
                     </p>
                     <p className="mt-2 max-w-lg text-sm/6 text-gray-300 max-lg:text-center">
-                      Strategic SEO and content marketing to boost online visibility and conversions.
+                      {t.services.digitalMarketingDesc}
                     </p>
                   </div>
                   <div className="relative min-h-[30rem] w-full grow">
@@ -261,6 +222,79 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Why Choose Us Section (New) */}
+      <section className="relative w-full border-t border-orange-900/10">
+        <div className="absolute inset-0 flex">
+          <div className="h-full w-full bg-gradient-to-br from-orange-500/5 via-transparent to-yellow-500/5"></div>
+        </div>
+        <div className="relative w-full py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl sm:text-center">
+              <h2 className="text-base font-semibold leading-7 text-orange-400">{t.whyUs.title}</h2>
+              <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">{t.whyUs.subtitle}</p>
+              
+              <div className="mt-10 flex flex-col gap-8 sm:mt-16">
+                {/* Grid of reasons */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+                  {/* Reason 1 */}
+                  <div className="relative pl-12">
+                    <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-600/10">
+                      <TrophyIcon className="h-6 w-6 text-orange-500" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold leading-8 text-white">{t.whyUs.reason1}</h3>
+                      <p className="mt-2 text-base leading-7 text-gray-300">{t.whyUs.reason1Desc}</p>
+                    </div>
+                  </div>
+
+                  {/* Reason 2 */}
+                  <div className="relative pl-12">
+                    <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-600/10">
+                      <PuzzlePieceIcon className="h-6 w-6 text-orange-500" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold leading-8 text-white">{t.whyUs.reason2}</h3>
+                      <p className="mt-2 text-base leading-7 text-gray-300">{t.whyUs.reason2Desc}</p>
+                    </div>
+                  </div>
+
+                  {/* Reason 3 */}
+                  <div className="relative pl-12">
+                    <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-600/10">
+                      <ArrowTrendingUpIcon className="h-6 w-6 text-orange-500" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold leading-8 text-white">{t.whyUs.reason3}</h3>
+                      <p className="mt-2 text-base leading-7 text-gray-300">{t.whyUs.reason3Desc}</p>
+                    </div>
+                  </div>
+
+                  {/* Reason 4 */}
+                  <div className="relative pl-12">
+                    <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-600/10">
+                      <HeartIcon className="h-6 w-6 text-orange-500" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold leading-8 text-white">{t.whyUs.reason4}</h3>
+                      <p className="mt-2 text-base leading-7 text-gray-300">{t.whyUs.reason4Desc}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-10 flex justify-center">
+                <button
+                  onClick={() => setIsConsultationOpen(true)}
+                  className="rounded-md bg-gradient-to-r from-orange-600 to-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg hover:from-orange-500 hover:to-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                >
+                  {t.hero.freeConsultation}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Feature Section */}
       <section className="relative w-full border-t border-orange-900/10">
         <div className="mx-auto max-w-[95%] px-4 py-24 sm:py-32">
@@ -268,37 +302,58 @@ export default function Home() {
             <div className="lg:pr-8 lg:pt-4">
               <div className="lg:max-w-lg">
                 <h2 className="text-base font-semibold leading-7 text-orange-400">
-                  Innovation at Speed
+                  {t.features.title}
                 </h2>
                 <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  Built for Growth
+                  {t.features.subtitle}
                 </p>
                 <p className="mt-6 text-lg leading-8 text-gray-300">
-                  We create digital solutions that scale with your business. Our agile approach ensures quick iterations and continuous improvement for maximum impact.
+                  {t.features.description}
                 </p>
                 <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-300 lg:max-w-none">
-                  {features.map((feature) => (
-                    <div key={feature.name} className="relative pl-9">
-                      <dt className="inline font-semibold text-white">
-                        <feature.icon
-                          className="absolute left-1 top-1 h-5 w-5 text-orange-500"
-                          aria-hidden="true"
-                        />
-                        {feature.name}
-                      </dt>{" "}
-                      <dd className="inline">{feature.description}</dd>
-                    </div>
-                  ))}
+                  <div className="relative pl-9">
+                    <dt className="inline font-semibold text-white">
+                      <CloudArrowUpIcon
+                        className="absolute left-1 top-1 h-5 w-5 text-orange-500"
+                        aria-hidden="true"
+                      />
+                      {t.features.feature1}
+                    </dt>{" "}
+                    <dd className="inline">{t.features.feature1Desc}</dd>
+                  </div>
+                  <div className="relative pl-9">
+                    <dt className="inline font-semibold text-white">
+                      <LockClosedIcon
+                        className="absolute left-1 top-1 h-5 w-5 text-orange-500"
+                        aria-hidden="true"
+                      />
+                      {t.features.feature2}
+                    </dt>{" "}
+                    <dd className="inline">{t.features.feature2Desc}</dd>
+                  </div>
+                  <div className="relative pl-9">
+                    <dt className="inline font-semibold text-white">
+                      <ServerIcon
+                        className="absolute left-1 top-1 h-5 w-5 text-orange-500"
+                        aria-hidden="true"
+                      />
+                      {t.features.feature3}
+                    </dt>{" "}
+                    <dd className="inline">{t.features.feature3Desc}</dd>
+                  </div>
                 </dl>
               </div>
             </div>
-            <img
-              src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072"
-              alt="Modern development workspace"
-              className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-white/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
-              width={2432}
-              height={1442}
-            />
+            <div className="relative w-full lg:max-w-none">
+              <img
+                src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072"
+                alt="Modern development workspace"
+                className="w-full max-w-none rounded-xl shadow-xl ring-1 ring-white/10 sm:w-full md:ml-0 lg:ml-0"
+                style={{ maxHeight: "600px", objectFit: "cover", objectPosition: "center" }}
+              />
+              <div className="absolute -bottom-6 -left-6 h-24 w-24 rounded-lg bg-orange-600/10 blur-2xl"></div>
+              <div className="absolute -top-6 -right-6 h-24 w-24 rounded-lg bg-yellow-600/10 blur-2xl"></div>
+            </div>
           </div>
         </div>
       </section>
@@ -310,13 +365,13 @@ export default function Home() {
         </div>
         <div className="relative mx-auto max-w-[95%] px-4 py-24 sm:py-32">
           <h2 className="text-center text-base/7 font-semibold text-purple-400">
-            AI-Powered Solutions
+            {t.ai.title}
           </h2>
           <p className="mx-auto mt-2 max-w-2xl text-center text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
-            Transform Your Workflow with AI
+            {t.ai.subtitle}
           </p>
           <p className="mx-auto mt-6 max-w-2xl text-center text-lg text-gray-300">
-            Harness the power of artificial intelligence to streamline operations, enhance decision-making, and create personalized experiences for your customers.
+            {t.ai.description}
           </p>
           
           <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -325,13 +380,13 @@ export default function Home() {
               <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-purple-500/10">
                 <Image src="/images/AI assistant.png" width={32} height={32} alt="AI Chatbots" className="h-8 w-8" />
               </div>
-              <h3 className="text-xl font-semibold text-white">Intelligent Virtual Assistants</h3>
+              <h3 className="text-xl font-semibold text-white">{t.ai.feature1}</h3>
               <p className="mt-4 text-gray-300">
-                Custom AI chatbots that handle customer inquiries 24/7, schedule appointments, and provide personalized recommendations based on user behavior.
+                {t.ai.feature1Desc}
               </p>
               <div className="mt-6 flex items-center gap-x-3">
                 <div className="h-px flex-1 bg-gray-700" />
-                <Link href="/services/ai" className="text-sm font-medium text-purple-400 hover:text-purple-300">Learn more</Link>
+                <Link href="/services/ai" className="text-sm font-medium text-purple-400 hover:text-purple-300">{t.ai.learnMore}</Link>
               </div>
             </div>
 
@@ -340,13 +395,13 @@ export default function Home() {
               <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-purple-500/10">
                 <Image src="/images/RAG.png" width={32} height={32} alt="Document Processing" className="h-8 w-8" />
               </div>
-              <h3 className="text-xl font-semibold text-white">Intelligent Document Processing</h3>
+              <h3 className="text-xl font-semibold text-white">{t.ai.feature2}</h3>
               <p className="mt-4 text-gray-300">
-                Automated analysis of contracts, invoices, and reports with our RAG-powered systems that extract key insights and action items without manual review.
+                {t.ai.feature2Desc}
               </p>
               <div className="mt-6 flex items-center gap-x-3">
                 <div className="h-px flex-1 bg-gray-700" />
-                <Link href="/services/ai" className="text-sm font-medium text-purple-400 hover:text-purple-300">Learn more</Link>
+                <Link href="/services/ai" className="text-sm font-medium text-purple-400 hover:text-purple-300">{t.ai.learnMore}</Link>
               </div>
             </div>
 
@@ -357,13 +412,13 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white">Predictive Analytics</h3>
+              <h3 className="text-xl font-semibold text-white">{t.ai.feature3}</h3>
               <p className="mt-4 text-gray-300">
-                Leverage your business data with AI models that forecast trends, identify opportunities, and recommend optimal strategies for growth and efficiency.
+                {t.ai.feature3Desc}
               </p>
               <div className="mt-6 flex items-center gap-x-3">
                 <div className="h-px flex-1 bg-gray-700" />
-                <Link href="/services/ai" className="text-sm font-medium text-purple-400 hover:text-purple-300">Learn more</Link>
+                <Link href="/services/ai" className="text-sm font-medium text-purple-400 hover:text-purple-300">{t.ai.learnMore}</Link>
               </div>
             </div>
           </div>
@@ -371,42 +426,34 @@ export default function Home() {
           <div className="mt-16 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 p-8 ring-1 ring-purple-500/20 lg:p-12">
             <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:items-center">
               <div>
-                <h3 className="text-2xl font-semibold text-white">How AI Transforms Your Business</h3>
+                <h3 className="text-2xl font-semibold text-white">{t.ai.transformTitle}</h3>
                 <p className="mt-4 text-gray-300">
-                  Our AI solutions are designed to integrate seamlessly with your existing workflows, automating repetitive tasks, enhancing decision-making processes, and providing valuable insights from your data.
+                  {t.ai.transformDesc}
                 </p>
                 <ul className="mt-6 space-y-3">
                   <li className="flex items-start">
                     <div className="mr-3 mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-purple-500/10">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5 text-purple-400">
-                        <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
-                      </svg>
+                      <CheckCircleIcon className="h-3.5 w-3.5 text-purple-400" />
                     </div>
-                    <span className="text-gray-300">Reduce operational costs by up to 40%</span>
+                    <span className="text-gray-300">{t.ai.benefit1}</span>
                   </li>
                   <li className="flex items-start">
                     <div className="mr-3 mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-purple-500/10">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5 text-purple-400">
-                        <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
-                      </svg>
+                      <CheckCircleIcon className="h-3.5 w-3.5 text-purple-400" />
                     </div>
-                    <span className="text-gray-300">Improve customer satisfaction with personalized experiences</span>
+                    <span className="text-gray-300">{t.ai.benefit2}</span>
                   </li>
                   <li className="flex items-start">
                     <div className="mr-3 mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-purple-500/10">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5 text-purple-400">
-                        <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
-                      </svg>
+                      <CheckCircleIcon className="h-3.5 w-3.5 text-purple-400" />
                     </div>
-                    <span className="text-gray-300">Make better decisions with AI-driven insights and recommendations</span>
+                    <span className="text-gray-300">{t.ai.benefit3}</span>
                   </li>
                   <li className="flex items-start">
                     <div className="mr-3 mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-purple-500/10">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5 text-purple-400">
-                        <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
-                      </svg>
+                      <CheckCircleIcon className="h-3.5 w-3.5 text-purple-400" />
                     </div>
-                    <span className="text-gray-300">Scale your operations without proportional increase in staffing</span>
+                    <span className="text-gray-300">{t.ai.benefit4}</span>
                   </li>
                 </ul>
                 <div className="mt-8">
@@ -414,7 +461,7 @@ export default function Home() {
                     href="/services/ai" 
                     className="inline-flex items-center rounded-md bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
                   >
-                    Explore AI Solutions
+                    {t.ai.exploreSolutions}
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="ml-2 h-5 w-5">
                       <path fillRule="evenodd" d="M2 10a.75.75 0 0 1 .75-.75h12.59l-2.1-1.95a.75.75 0 1 1 1.02-1.1l3.5 3.25a.75.75 0 0 1 0 1.1l-3.5 3.25a.75.75 0 1 1-1.02-1.1l2.1-1.95H2.75A.75.75 0 0 1 2 10Z" clipRule="evenodd" />
                     </svg>
@@ -433,6 +480,108 @@ export default function Home() {
                 </div>
                 <div className="absolute -top-6 -right-6 h-24 w-24 rounded-lg bg-purple-600/10 blur-2xl"></div>
                 <div className="absolute -bottom-6 -left-6 h-24 w-24 rounded-lg bg-indigo-600/10 blur-2xl"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Current Trends Section (New) */}
+      <section className="relative w-full border-t border-indigo-900/10">
+        <div className="absolute inset-0 flex">
+          <div className="h-full w-full bg-gradient-to-br from-indigo-500/5 via-transparent to-blue-500/5"></div>
+        </div>
+        <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
+          <h2 className="text-center text-base/7 font-semibold text-indigo-400">
+            Latest Tech Trends 2025
+          </h2>
+          <p className="mx-auto mt-2 max-w-2xl text-center text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
+            Stay Ahead with Cutting-Edge Technology
+          </p>
+          
+          <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="group relative overflow-hidden rounded-xl bg-gray-800/50 shadow-lg transition-all hover:bg-gray-800/70">
+              <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+              <img 
+                src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" 
+                alt="AI-powered development"
+                className="h-64 w-full object-cover transition-transform group-hover:scale-105"
+              />
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <h3 className="text-xl font-bold text-white">AI-Powered Development</h3>
+                <p className="mt-2 text-sm text-gray-300">AI-assisted coding and automated testing transform how software is built</p>
+              </div>
+              <div className="absolute top-0 right-0 p-4">
+                <span className="rounded-full bg-indigo-600/80 px-2.5 py-0.5 text-xs font-semibold text-white">
+                  2025
+                </span>
+              </div>
+            </div>
+            
+            <div className="group relative overflow-hidden rounded-xl bg-gray-800/50 shadow-lg transition-all hover:bg-gray-800/70">
+              <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+              <img 
+                src="https://images.unsplash.com/photo-1545987796-200677ee1011?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
+                alt="Immersive Web Experiences" 
+                className="h-64 w-full object-cover transition-transform group-hover:scale-105"
+              />
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <h3 className="text-xl font-bold text-white">Immersive Web Experiences</h3>
+                <p className="mt-2 text-sm text-gray-300">WebXR and 3D interactions create engaging digital environments</p>
+              </div>
+              <div className="absolute top-0 right-0 p-4">
+                <span className="rounded-full bg-indigo-600/80 px-2.5 py-0.5 text-xs font-semibold text-white">
+                  Trending
+                </span>
+              </div>
+            </div>
+            
+            <div className="group relative overflow-hidden rounded-xl bg-gray-800/50 shadow-lg transition-all hover:bg-gray-800/70">
+              <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+              <img 
+                src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" 
+                alt="Edge Computing"
+                className="h-64 w-full object-cover transition-transform group-hover:scale-105"
+              />
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <h3 className="text-xl font-bold text-white">Edge Computing</h3>
+                <p className="mt-2 text-sm text-gray-300">Process data closer to where it's collected for faster, more reliable apps</p>
+              </div>
+              <div className="absolute top-0 right-0 p-4">
+                <span className="rounded-full bg-indigo-600/80 px-2.5 py-0.5 text-xs font-semibold text-white">
+                  Growing
+                </span>
+              </div>
+            </div>
+            
+            <div className="group relative overflow-hidden rounded-xl bg-gray-800/50 shadow-lg transition-all hover:bg-gray-800/70">
+              <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+              <img 
+                src="https://images.unsplash.com/photo-1639762681057-408e52192e55?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
+                alt="Web3 Integration" 
+                className="h-64 w-full object-cover transition-transform group-hover:scale-105"
+              />
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <h3 className="text-xl font-bold text-white">Web3 Integration</h3>
+                <p className="mt-2 text-sm text-gray-300">Decentralized applications and blockchain for secure, transparent systems</p>
+              </div>
+              <div className="absolute top-0 right-0 p-4">
+                <span className="rounded-full bg-indigo-600/80 px-2.5 py-0.5 text-xs font-semibold text-white">
+                  Rising
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-16 flex justify-center">
+            <div className="rounded-xl bg-gradient-to-r from-indigo-900/50 via-indigo-800/50 to-indigo-900/50 p-px">
+              <div className="rounded-[calc(0.75rem-1px)] bg-gray-900 px-6 py-4">
+                <p className="text-center text-sm md:text-base text-gray-300">
+                  Stay updated with the latest digital trends through our expert-led 
+                  <a href="/blog" className="ml-1 font-medium text-indigo-400 hover:text-indigo-300 hover:underline transition-colors">
+                    blog posts and industry insights
+                  </a>
+                </p>
               </div>
             </div>
           </div>
@@ -475,18 +624,24 @@ export default function Home() {
           </div>
           <div className="relative mx-auto max-w-7xl py-24 sm:py-32 lg:px-8 lg:py-40">
             <div className="pr-6 pl-6 md:ml-auto md:w-2/3 md:pl-16 lg:w-1/2 lg:pr-0 lg:pl-24 xl:pl-32">
-              <h2 className="text-base/7 font-semibold text-indigo-400">Ready to start your project?</h2>
-              <p className="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl">Let&apos;s build something amazing</p>
+              <h2 className="text-base/7 font-semibold text-indigo-400">{t.cta.title}</h2>
+              <p className="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl">{t.cta.subtitle}</p>
               <p className="mt-6 text-base/7 text-gray-300">
-                Whether you&apos;re a startup with a bold idea or an established business looking to innovate, our team is ready to turn your vision into reality. Let&apos;s discuss your project and create a digital solution that drives results.
+                {t.cta.description}
               </p>
-              <div className="mt-8">
+              <div className="mt-8 flex space-x-4">
                 <a
                   href="/contact"
                   className="inline-flex rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
-                  Get in touch
+                  {t.cta.getInTouch}
                 </a>
+                <button
+                  onClick={() => setIsConsultationOpen(true)}
+                  className="inline-flex items-center rounded-md bg-gradient-to-r from-orange-600 to-orange-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-lg hover:from-orange-500 hover:to-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
+                >
+                  {t.hero.freeConsultation}
+                </button>
               </div>
             </div>
           </div>
@@ -495,5 +650,13 @@ export default function Home() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <LanguageProvider>
+      <HomePage />
+    </LanguageProvider>
   );
 }

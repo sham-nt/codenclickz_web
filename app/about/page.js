@@ -59,7 +59,11 @@ export default function About() {
                                 <div className="space-y-4">
                                     <div>
                                         <p className="text-gray-400 mb-1">Email:</p>
-                                        <p className="text-white font-medium">kishore@codenclickz.com</p>
+                                        <p className="text-white font-medium">info@codenclickz.com</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-gray-400 mb-1">Phone:</p>
+                                        <p className="text-white font-medium">099 026 6719</p>
                                     </div>
                                     <div>
                                         <p className="text-gray-400 mb-1">Address:</p>

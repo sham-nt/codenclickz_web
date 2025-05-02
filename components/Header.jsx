@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Dialog,
   DialogPanel,
@@ -38,6 +38,8 @@ import {
   CommandLineIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/20/solid'
+import LanguageToggle from './LanguageToggle'
+import { useLanguage } from '@/lib/LanguageContext'
 
 const marketing_services = [
   {
@@ -126,11 +128,61 @@ const callsToAction = [
   { name: 'View all products', href: '#', icon: RectangleGroupIcon },
 ]
 
+// Default translations for when the language context is not available
+const defaultTranslations = {
+  menu: {
+    seoMarketing: "SEO and Digital Marketing",
+    services: "Services",
+    aiSolutions: "AI Solutions",
+    company: "Company",
+    blogs: "Blogs"
+  }
+};
+
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  
+  // Try to use the language context, but fall back to default translations if not available
+  let t = defaultTranslations;
+  try {
+    const languageContext = useLanguage();
+    if (languageContext && languageContext.t) {
+      t = languageContext.t;
+    }
+  } catch (error) {
+    console.log("Language context not available, using default translations");
+  }
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 10;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrolled]);
+
+  // Function to determine if we should show the language toggle
+  const shouldShowLanguageToggle = () => {
+    try {
+      const languageContext = useLanguage();
+      return !!languageContext;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  const showLanguageToggle = shouldShowLanguageToggle();
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50">
+    <header className={`fixed inset-x-0 top-0 z-50 transition duration-300 ease-in-out ${scrolled ? 'bg-gray-900/90 backdrop-blur-md shadow-lg' : ''}`}>
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
         {/* Logo */}
         <div className="flex lg:flex-1">
@@ -146,7 +198,8 @@ export default function Header() {
         </div>
 
         {/* Mobile menu button */}
-        <div className="flex lg:hidden">
+        <div className="flex lg:hidden items-center gap-4">
+          {showLanguageToggle && <LanguageToggle />}
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-200"
@@ -158,13 +211,13 @@ export default function Header() {
         </div>
 
         {/* Desktop Navigation */}
-        <PopoverGroup className="hidden lg:flex lg:gap-x-12 lg:justify-end">
+        <PopoverGroup className="hidden lg:flex lg:gap-x-8 lg:justify-end items-center">
           {/* Marketing Services */}
           <Popover>
             {({ open }) => (
               <>
                 <PopoverButton className={`flex items-center gap-x-1 text-sm/6 font-semibold ${open ? 'text-orange-500' : 'text-gray-200'}`}>
-                  SEO and Digital Marketing
+                  {t.menu.seoMarketing}
                   <ChevronDownIcon aria-hidden="true" className={`size-5 flex-none ${open ? 'text-orange-500' : 'text-gray-400'}`} />
                 </PopoverButton>
                 <PopoverPanel
@@ -211,7 +264,7 @@ export default function Header() {
             {({ open }) => (
               <>
                 <PopoverButton className={`flex items-center gap-x-1 text-sm/6 font-semibold ${open ? 'text-orange-500' : 'text-gray-200'}`}>
-                  Services
+                  {t.menu.services}
                   <ChevronDownIcon aria-hidden="true" className={`size-5 flex-none ${open ? 'text-orange-500' : 'text-gray-400'}`} />
                 </PopoverButton>
                 <PopoverPanel
@@ -258,7 +311,7 @@ export default function Header() {
             {({ open }) => (
               <>
                 <PopoverButton className={`flex items-center gap-x-1 text-sm/6 font-semibold ${open ? 'text-orange-500' : 'text-gray-200'}`}>
-                  AI Solutions
+                  {t.menu.aiSolutions}
                   <ChevronDownIcon aria-hidden="true" className={`size-5 flex-none ${open ? 'text-orange-500' : 'text-gray-400'}`} />
                 </PopoverButton>
                 <PopoverPanel
@@ -305,7 +358,7 @@ export default function Header() {
             {({ open }) => (
               <>
                 <PopoverButton className={`flex items-center gap-x-1 text-sm/6 font-semibold ${open ? 'text-orange-500' : 'text-gray-200'}`}>
-                  Company
+                  {t.menu.company}
                   <ChevronDownIcon aria-hidden="true" className={`size-5 flex-none ${open ? 'text-orange-500' : 'text-gray-400'}`} />
                 </PopoverButton>
                 <PopoverPanel
@@ -317,7 +370,7 @@ export default function Header() {
                       { name: 'About Us', description: 'Learn more about our company.', icon: InformationCircleIcon, href: '/about' },
                       { name: 'Careers', description: 'Join our team and grow with us.', icon: BriefcaseIcon, href: '#' },
                       { name: 'Office Locations', description: 'Find our offices worldwide.', icon: MapPinIcon, href: '/about' },
-                      { name: 'Customer Stories', description: 'See how we’ve helped others.', icon: UserGroupIcon, href: '#' },
+                      { name: 'Customer Stories', description: 'See how we have helped others.', icon: UserGroupIcon, href: '#' },
                       { name: 'Leadership', description: 'Meet our leadership team.', icon: AcademicCapIcon, href: '/about' },
                     ].map((item) => (
                       <div key={item.name} className="group relative rounded-lg p-6 text-sm/6 hover:bg-gray-700">
@@ -355,8 +408,15 @@ export default function Header() {
 
           {/* Blogs */}
           <a href="/blog" className="text-sm/6 font-semibold text-white hover:text-orange-500">
-            Blogs
+            {t.menu.blogs}
           </a>
+          
+          {/* Language Toggle */}
+          {showLanguageToggle && (
+            <div className="ml-4">
+              <LanguageToggle />
+            </div>
+          )}
         </PopoverGroup>
       </nav>
 
@@ -390,7 +450,7 @@ export default function Header() {
                   {({ open }) => (
                     <>
                       <DisclosureButton className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-200 hover:bg-gray-700">
-                        SEO and Digital Marketing
+                        {t.menu.seoMarketing}
                         <ChevronDownIcon
                           className={`h-5 w-5 flex-none ${open ? 'rotate-180' : ''}`}
                           aria-hidden="true"
@@ -416,7 +476,7 @@ export default function Header() {
                   {({ open }) => (
                     <>
                       <DisclosureButton className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-200 hover:bg-gray-700">
-                        Services
+                        {t.menu.services}
                         <ChevronDownIcon
                           className={`h-5 w-5 flex-none ${open ? 'rotate-180' : ''}`}
                           aria-hidden="true"
@@ -442,7 +502,7 @@ export default function Header() {
                   {({ open }) => (
                     <>
                       <DisclosureButton className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-200 hover:bg-gray-700">
-                        AI Solutions
+                        {t.menu.aiSolutions}
                         <ChevronDownIcon
                           className={`h-5 w-5 flex-none ${open ? 'rotate-180' : ''}`}
                           aria-hidden="true"
@@ -468,7 +528,7 @@ export default function Header() {
                   {({ open }) => (
                     <>
                       <DisclosureButton className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-200 hover:bg-gray-700">
-                        Company
+                        {t.menu.company}
                         <ChevronDownIcon
                           className={`h-5 w-5 flex-none ${open ? 'rotate-180' : ''}`}
                           aria-hidden="true"
@@ -500,7 +560,7 @@ export default function Header() {
                   href="/blog"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-200 hover:bg-gray-700"
                 >
-                  Blogs
+                  {t.menu.blogs}
                 </a>
               </div>
             </div>
